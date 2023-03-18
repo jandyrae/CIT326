@@ -1,0 +1,34 @@
+student-03-d27b3ea21de7@qwiklabs.net
+Kp27PLHtkhIk
+qwiklabs-gcp-00-685128376239
+
+
+username(windows) student_03_d27b3ea21
+password M^UFM*<+09oV;Bz
+
+Note: You must configure the network firewall to open TCP port 3389 to enable RDP access.
+
+
+
+next lab's credentials
+
+student-03-59371dce4f0f@qwiklabs.net
+vUxaounppZqo
+
+qwiklabs-gcp-03-da0c387ae43a - id
+
+creating a virtual machine lab
+project id
+
+username
+student-00-7b19a6a2f643@qwiklabs.net
+password
+1se0EHX7ovkL
+
+list active account name
+gcloud auth list
+
+list project id ->qwiklabs-gcp-00-2ab23d44daa6
+gcloud config list project
+
+

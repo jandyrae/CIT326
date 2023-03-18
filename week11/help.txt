@@ -1,0 +1,87 @@
+gcloud auth list (AND click authorize)
+
+
+-- create a Cloud SQL instance
+gcloud sql instances create flights \
+    --database-version=POSTGRES_13 --cpu=2 --memory=8GiB \
+    --region=us-west1 --root-password=Passw0rd
+    
+-- Create an environment variable with the Cloud Shell IP address
+export ADDRESS=$(curl -s http://ipecho.net/plain)/32
+
+-- set allowlist (then select Y)
+gcloud sql instances patch flights --authorized-networks $ADDRESS
+
+
+Year | Quarter | Month | DayofMonth | DayOfWeek | FlightDate | Reporting_Airline | DOT_ID_Reporting_Airline | IATA_CODE_Reporting_Airline | Tail_Number | Flight_Number_Reporting_Airline | OriginAirportID | OriginAirportSeqID | OriginCityMarketID | Origin | OriginCityName | OriginState | OriginStateFips | OriginStateName | OriginWac | DestAirportID | DestAirportSeqID | DestCityMarketID | Dest |  DestCityName   | DestState | DestStateFips | DestStateName | DestWac | CRSDepTime | DepTime | DepDelay | DepDelayMinutes | DepDel15 | DepartureDelayGroups | DepTimeBlk | TaxiOut | WheelsOff | WheelsOn | TaxiIn | CRSArrTime | ArrTime | ArrDelay | ArrDelayMinutes | ArrDel15 | ArrivalDelayGroups | ArrTimeBlk | Cancelled | CancellationCode | Diverted | CRSElapsedTime | ActualElapsedTime | AirTime | Flights | Distance | DistanceGroup | CarrierDelay | WeatherDelay | NASDelay | SecurityDelay | LateAircraftDelay | FirstDepTime | TotalAddGTime | LongestAddGTime | DivAirportLandings | DivReachedDest | DivActualElapsedTime | DivArrDelay | DivDistance | Div1Airport | Div1AirportID | Div1AirportSeqID | Div1WheelsOn | Div1TotalGTime | Div1LongestGTime | Div1WheelsOff | Div1TailNum | Div2Airport | Div2AirportID | Div2AirportSeqID | Div2WheelsOn | Div2TotalGTime | Div2LongestGTime | Div2WheelsOff | Div2TailNum | Div3Airport | Div3AirportID | Div3AirportSeqID | Div3WheelsOn | Div3TotalGTime | Div3LongestGTime | Div3WheelsOff | Div3TailNum | Div4Airport | Div4AirportID | Div4AirportSeqID | Div4WheelsOn | Div4TotalGTime | Div4LongestGTime | Div4WheelsOff | Div4TailNum | Div5Airport | Div5AirportID | Div5AirportSeqID | Div5WheelsOn | Div5TotalGTime | Div5LongestGTime | Div5WheelsOff | Div5TailNum | junk
+
+Getting Started with Cloud Shell and gcloud
+
+
+update firewall rule
+gcloud compute firewall-rules create default-allow-http --direction=INGRESS --priority=1000 --network=default --action=ALLOW --rules=tcp:80 --source-ranges=0.0.0.0/0 --target-tags=http-server
+
+add a tag to the vm
+gcloud compute instances add-tags gcelab2 --tags http-server,https-server
+
+list firewall rules for project
+gcloud compute firewall-rules list
+
+filtered list
+gcloud compute firewall-rules list --filter=ALLOW:'80'
+
+verify communication is possible for http to vm
+curl http://$(gcloud compute instances list --filter=name:gcelab2 --format='value(EXTERNAL_IP)')
+
+
+TO DISPLAY PROJECT AND ZONE ONCE SET
+echo -e "PROJECT ID: $PROJECT_ID\nZONE:$ZONE"
+
+VREATE A VM 
+gcloud compute instances create gcelab2 --machine-type e2-medium --zone $ZONE
+
+-------------kubernetes engine quikstart
+project
+set default compute zone
+create a GKE cluster
+(gcloud container clusters create --machine-type=e2-medium --zone=us-east5-a lab-cluster )
+
+Get authentication credentials for the cluster
+gcloud container clusters get-credentials lab-cluster 
+
+Deploy an app to the cluster
+kubectl create deployment hello-server --image=gcr.io/google-samples/hello-app:1.0
+
+create a Kubernetes Service
+kubectl expose deployment hello-server --type=LoadBalancer --port 8080
+
+inspect the service (get the External ip)
+kubectl get service
+
+then show it 
+http://[EXTERNAL-IP]:8080
+
+
+When done, delete the cluster
+gcloud container clusters delete lab-cluster 
+
+
+
+curl http://34.86.37.56
+curl http://35.245.169.83
+curl http://35.199.21.67
+34.86.37.56
+
+
+34.149.87.44:80
+
+
+Week 11 Scenario
+Instance ID week11-daas
+default admin user: postgres 
+Password: CIT326Password!
+https://cloud.google.com/products/calculator/#id=1abbee40-e420-46f2-8247-721ccee6848a 
+
+PostgreSQL
+Protocol	Port Number
+TCP	5432

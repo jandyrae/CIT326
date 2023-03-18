@@ -1,0 +1,1 @@
+-- docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=cit326Password$' -e 'MSSQL_AGENT_ENABLED=True' -p 49433:1433 -d
