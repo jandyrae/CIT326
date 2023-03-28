@@ -1,0 +1,80 @@
+terraform {
+  required_providers {
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "~> 2.15.0"
+    }
+  }
+}
+
+provider "docker" {}
+
+resource "docker_image" "nginx" {
+  name         = "nginx:latest"
+  keep_locally = false
+}
+
+resource "docker_container" "nginx" {
+  image = docker_image.nginx.latest
+  name  = "tutorial"
+  ports {
+    internal = 80
+    external = 8000
+  }
+}
+/*
+    To deploy infrastructure with Terraform:
+
+    Scope - Identify the infrastructure for your project.
+    Author - Write the configuration for your infrastructure.
+    Initialize - Install the plugins Terraform needs to manage the infrastructure.
+    Plan - Preview the changes Terraform will make to match your configuration.
+    Apply - Make the planned changes.
+
+*/
+-- above is main.tf then in terminal,
+ --allows Terraform to interact with Docker
+ terraform init
+ --Provision the NGINX server container with apply
+ terraform apply
+-- Verify NGINX instance
+-- view the NGINX container running in Docker via Terraform.
+docker ps
+--Destroy resources
+terraform destroy
+
+example from quiklabs
+
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+provider "google" {
+  project = "qwiklabs-gcp-03-1a2057b43eb8"
+  region  = "us-central1"
+  zone    = "us-central1-c"
+}
+resource "google_compute_network" "vpc_network" {
+  name = "terraform-network"
+}
+resource "google_compute_instance" "vm_instance" {
+  name         = "terraform-instance"
+  machine_type = "f1-micro"
+  tags         = ["web", "dev"]
+  boot_disk {
+    initialize_params {
+            image = "cos-cloud/cos-stable"
+    }
+  }
+  network_interface {
+    network = google_compute_network.vpc_network.name
+    access_config {
+    }
+  }
+}
+
+https://run.qwiklabs.com/focuses/1215?parent=catalog - cloud sql with Terraform
+*********************************************************************

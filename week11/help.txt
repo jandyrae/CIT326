@@ -85,3 +85,8 @@ https://cloud.google.com/products/calculator/#id=1abbee40-e420-46f2-8247-721ccee
 PostgreSQL
 Protocol	Port Number
 TCP	5432
+
+
+
+PGAdmin
+Master: K@m3r0n

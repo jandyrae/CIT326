@@ -1,0 +1,79 @@
+containers vs kubernetes
+containers - 
+    separation , 
+    lightweight, 
+    containerize programs
+
+kubernetes - container management
+    own library
+    admin tasks
+    policies
+    monitor
+    manage resources
+    site reliable engineers sre's 
+    designed primarily for stateless workloads 
+     start with a test database and pilot it extensively
+
+Prerequisites for MySQL deployment (https://www.sqlshack.com/sql-database-on-kubernetes-considerations-and-best-practices/)
+Before you can get started you need to have:
+
+    A configured Kubernetes cluster
+    The kubectl command-line tool
+    Either a dynamic or statically provisioned PersistentVolumeClaim
+    A database image
+1.  need to create two YAML files, assuming you are statically defining your persistent volume. One should define your deployment, including the image you’re using, your credentials, and your persistent volume names and paths (see an example from the Kubernetes documentation). The other defines your PersistentVolume (PV) and PersistentVolumeClaim (PVC), including storage capacity, access modes, and path (see an example https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples/application/mysql/mysql-pv.yaml )
+
+2. files are defined, you are ready to deploy them using
+kubectl apply -f {file source}
+
+3. After this is done, you need to verify that the deployment went as expected. You can do this by checking the deployment specs:
+kubectl describe deployment mysql
+
+4. Checking the pods that were created:
+kubectl get pods -l app=mysql
+
+And inspecting your PersistentVolumeClaim:
+kubectl describe pvc mysql-pv-claim
+
+Lastly, how to run a MySQL client and connect to your MySQL instance running on Kubernetes:
+kubectl run -it –rm –image=mysql:5.6 –restart=Never mysql-client — mysql -h mysql -ppassword
+
+
+
+
+lab steps Kubernetes Engine Quik Start
+-- authorization
+gcloud auth list
+
+-- set region
+gcloud config set compute/region us-central1
+
+-- set zone
+gcloud config set compute/zone us-central1-c
+
+/*
+A cluster consists of at least one cluster master machine and multiple worker machines called nodes. Nodes are Compute Engine virtual machine (VM) instances that run the Kubernetes processes necessary to make them part of the cluster.
+** Note: Cluster names must start with a letter and end with an alphanumeric, and cannot be longer than 40 characters.
+*/
+
+-- create a cluster (GKE cluster)
+gcloud container clusters create --machine-type=e2-medium --zone=us-central1-c cluster_name_here 
+
+-- Authenticate with the cluster
+gcloud container clusters get-credentials cluster_name_here 
+
+-- create a new Deployment
+kubectl create deployment hello-server --image=gcr.io/google-samples/hello-app:1.0
+(Example gcr...)
+
+-- create a Kubernetes Service
+kubectl expose deployment hello-server --type=LoadBalancer --port 8080 
+
+-- To inspect
+kubectl get service
+
+-- view app from web browser
+http://[EXTERNAL-IP]:8080
+
+-- delete cluster
+gcloud container clusters delete cluster_name_here 
