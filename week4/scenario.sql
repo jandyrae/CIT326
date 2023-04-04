@@ -35,21 +35,24 @@ SKIP,
 NOREWIND,
 NOUNLOAD,
 STATS = 10
-GO BACKUP DATABASE [SalesOrdersExample] TO DISK = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Backup\SalesOrdersExample.bak' WITH NOFORMAT,
+GO 
+BACKUP DATABASE [SalesOrdersExample] TO DISK = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Backup\SalesOrdersExample.bak' WITH NOFORMAT,
     NOINIT,
     NAME = N'SalesOrdersExample-Full Database Backup',
     SKIP,
     NOREWIND,
     NOUNLOAD,
     STATS = 10
-GO BACKUP DATABASE [sampleTEST] TO DISK = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Backup\sampleTEST.bak' WITH NOFORMAT,
+GO 
+BACKUP DATABASE [sampleTEST] TO DISK = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Backup\sampleTEST.bak' WITH NOFORMAT,
     NOINIT,
     NAME = N'sampleTEST-Full Database Backup',
     SKIP,
     NOREWIND,
     NOUNLOAD,
     STATS = 10
-GO BACKUP DATABASE [SchoolSchedulingExample] TO DISK = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Backup\SchoolSchedulingExample.bak' WITH NOFORMAT,
+GO 
+BACKUP DATABASE [SchoolSchedulingExample] TO DISK = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Backup\SchoolSchedulingExample.bak' WITH NOFORMAT,
     NOINIT,
     NAME = N'SchoolSchedulingExample-Full Database Backup',
     SKIP,
@@ -77,7 +80,9 @@ NOSKIP,
 NOREWIND,
 NOUNLOAD,
 NORECOVERY,
-STATS = 5 RESTORE DATABASE [bowling_TEST]
+STATS = 5 
+
+RESTORE DATABASE [bowling_TEST]
 FROM DISK = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Backup\BowlingLeagueExample.bak' WITH FILE = 1,
     MOVE N'BowlingLeagueExample' TO N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\bowling_TEST.mdf',
     MOVE N'BowlingLeagueExample_log' TO N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\bowling_TEST_log.ldf',

@@ -1,0 +1,58 @@
+create cluster
+open cloud shell
+kubectl config current-context
+
+https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/
+
+custom yaml
+cat <<EOF >./kustomization.yaml
+secretGenerator:
+- name: mysql-pass
+  literals:
+  - password=cit326Password!
+EOF
+
+-- then
+curl -LO https://k8s.io/examples/application/wordpress/mysql-deployment.yaml
+curl -LO https://k8s.io/examples/application/wordpress/wordpress-deployment.yaml
+
+-- add to kustom
+cat <<EOF >>./kustomization.yaml
+resources:
+  - mysql-deployment.yaml
+  - wordpress-deployment.yaml
+EOF
+
+apply and deploy
+kubectl apply -k ./
+
+check pods
+kubectl get pods
+kubectl get secrets
+kubectl get pvc
+kubectl get services
+
+external ip 
+wordpress setup
+username jandyrae
+ password = QfB4H5qj#p*TUNA#a%
+
+kubectl run -it --rm --image=mysql:5.6 --restart=Never mysql-client -- mysql -h wordpress-mysql -pcit326Password!
+
+at mysql prompt 
+show databases;
+use wordpress;
+show tables;
+select post_date, post_name, post_content from wp_posts;
+
+quit to exit mysql 
+
+kubectl get pods
+kubectl delete pod wordpress-mysql-5d87c45548-rldtt
+
+kubectl describe pod ___
+
+kubectl scale --replicas=0
+
+kill it when done
+kubectl delete -k ./
